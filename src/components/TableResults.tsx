@@ -1,78 +1,56 @@
-"use client";
-import { ModeToggle } from "@/components/ThemeToggle";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Scanner } from "@yudiel/react-qr-scanner";
-import { LayoutDashboard } from "lucide-react";
-import Link from "next/link";
+import React from "react";
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "./ui/table";
 
 const invoices = [
   {
     invoice: "INV001",
     paymentStatus: "Paid",
     totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
   },
   {
     invoice: "INV002",
     paymentStatus: "Pending",
     totalAmount: "$150.00",
-    paymentMethod: "PayPal",
   },
   {
     invoice: "INV003",
     paymentStatus: "Unpaid",
     totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
   },
   {
     invoice: "INV004",
     paymentStatus: "Paid",
     totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
   },
   {
     invoice: "INV005",
     paymentStatus: "Paid",
     totalAmount: "$550.00",
-    paymentMethod: "PayPal",
   },
   {
     invoice: "INV006",
     paymentStatus: "Pending",
     totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
   },
   {
     invoice: "INV007",
     paymentStatus: "Unpaid",
     totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
   },
 ];
 
-export default function Home() {
-  return (
-    // <Scanner onScan={(result) => console.log(result)} />
+type Props = {};
 
-    <div className="p-6 max-w-4xl mx-auto">
-      <ModeToggle />
-      <div className="border rounded-lg p-2">
+export default function TableResults({}: Props) {
+  return (
+    <div className="p-2 max-w-4xl mx-auto">
+      <div className="shadow-md rounded-md px-2">
+        <h1 className="flex flex-col text-center pb-2 font-black">Minhas compras</h1>
         <Table>
-          <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Invoice</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
+              <TableHead>Invoice</TableHead>
+              <TableHead className="text-start">Status</TableHead>
               <TableHead className="text-right">Amount</TableHead>
             </TableRow>
           </TableHeader>
@@ -80,15 +58,14 @@ export default function Home() {
             {invoices.map((invoice) => (
               <TableRow key={invoice.invoice}>
                 <TableCell className="font-medium">{invoice.invoice}</TableCell>
-                <TableCell>{invoice.paymentStatus}</TableCell>
-                <TableCell>{invoice.paymentMethod}</TableCell>
+                <TableCell className="text-start">{invoice.paymentStatus}</TableCell>
                 <TableCell className="text-right">{invoice.totalAmount}</TableCell>
               </TableRow>
             ))}
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={3}>Total</TableCell>
+              <TableCell colSpan={2}>Total</TableCell>
               <TableCell className="text-right">$2,500.00</TableCell>
             </TableRow>
           </TableFooter>
