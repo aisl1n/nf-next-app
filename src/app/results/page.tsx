@@ -1,47 +1,66 @@
+"use client";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { ReloadIcon } from "@radix-ui/react-icons";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import React from "react";
+import TableDrawer from "@/components/TableDrawer";
 
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-  },
-];
+type Invoice = {
+  _id: string;
+  market: string;
+  date: string;
+  products: Array<{
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+  }>;
+  total: number;
+};
 
-type Props = {};
+export default function TableResultsPage() {
+  const [invoices, setInvoices] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | undefined>(undefined);
 
-export default function TableResultsPage({}: Props) {
+  useEffect(() => {
+    async function getPurchases() {
+      try {
+        const response = await axios.get("https://nf-api-server.vercel.app/purchases");
+        setInvoices(response.data);
+      } catch (error) {
+        console.error("Erro buscar novas compras", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    getPurchases();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-full h-96 w-full">
+        <div className="flex items-center">
+          <ReloadIcon className="mr-2 h-6 w-6 animate-spin" />
+          Por favor aguarde...
+        </div>
+      </div>
+    );
+  }
+
+  const handleRowClick = (invoice: Invoice) => {
+    setSelectedInvoice(invoice);
+    const triggerButton = document.getElementById("drawer-trigger");
+    if (triggerButton) {
+      triggerButton.click();
+    }
+  };
+
+  const formatTotalValue = (invoices: Invoice[]) => {
+    return "R$" + invoices.reduce((acc, invoice) => acc + invoice.total, 0).toFixed(2);
+  };
+
   return (
     <div className="p-2 max-w-4xl mx-auto">
       <div className="shadow-md rounded-md px-2">
@@ -49,27 +68,28 @@ export default function TableResultsPage({}: Props) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Invoice</TableHead>
-              <TableHead className="text-start">Status</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
+              <TableHead>Compra</TableHead>
+              <TableHead className="text-start">Data</TableHead>
+              <TableHead className="text-right">Total</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {invoices.map((invoice) => (
-              <TableRow key={invoice.invoice}>
-                <TableCell className="font-medium">{invoice.invoice}</TableCell>
-                <TableCell className="text-start">{invoice.paymentStatus}</TableCell>
-                <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+              <TableRow key={invoice._id} onClick={() => handleRowClick(invoice._id)}>
+                <TableCell className="font-medium">{invoice.market}</TableCell>
+                <TableCell className="text-start">{invoice.date}</TableCell>
+                <TableCell className="text-right">{invoice.total}</TableCell>
               </TableRow>
             ))}
           </TableBody>
           <TableFooter>
             <TableRow>
               <TableCell colSpan={2}>Total</TableCell>
-              <TableCell className="text-right">$2,500.00</TableCell>
+              <TableCell className="text-right">{formatTotalValue(invoices)}</TableCell>
             </TableRow>
           </TableFooter>
         </Table>
+        <TableDrawer selectedInvoice={selectedInvoice} />
       </div>
     </div>
   );

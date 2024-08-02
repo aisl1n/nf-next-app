@@ -1,9 +1,10 @@
 "use client";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Scanner, useDevices, IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import TableResults from "@/components/TableResults";
 import { Button } from "@/components/ui/button";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 export default function QrReaderPage() {
   const [scannedData, setScannedData] = useState<any>(null);
@@ -12,7 +13,7 @@ export default function QrReaderPage() {
   const handleScan = async (url: any) => {
     console.log("Scanned URL:", url);
     try {
-      const response = await axios.get("http://localhost:3333/proxy", {
+      const response = await axios.get("https://nf-api-server.vercel.app/proxy", {
         params: { url },
       });
       console.log("Data fetched:", response.data);
@@ -26,9 +27,9 @@ export default function QrReaderPage() {
     console.log("Salvando compra...");
     const { produtos, valorTotalNumber, nomeLoja, dataCompra } = scannedData;
     try {
-      axios.post("http://localhost:3333/products", produtos).then((response) => {
+      axios.post("https://nf-api-server.vercel.app/products", produtos).then((response) => {
         axios
-          .post("http://localhost:3333/purchases", {
+          .post("https://nf-api-server.vercel.app/purchases", {
             nomeLoja,
             dataCompra,
             produtos: response.data,
