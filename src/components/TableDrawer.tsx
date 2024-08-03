@@ -65,7 +65,7 @@ export default function TableDrawer({ selectedInvoice }: TableDrawerProps) {
   return (
     <Drawer>
       <DrawerTrigger id="drawer-trigger" />
-      <DrawerContent className="focus:outline-none p-2">
+      <DrawerContent className="focus:outline-none p-2 lg:p-16">
         <DrawerHeader>
           <DrawerTitle>Itens comprados</DrawerTitle>
           <DrawerDescription>Listagem de produtos adquiridos</DrawerDescription>
@@ -97,16 +97,16 @@ export default function TableDrawer({ selectedInvoice }: TableDrawerProps) {
             </TableBody>
           </Table>
         )}
-        <DrawerFooter>
-          <Button className="flex gap-2" onClick={() => handleDeletePurchase()}>
-            <CircleAlert />
-            Excluir compra
-          </Button>
-          <DrawerClose>
-            <Button className="flex w-full" variant="outline">
-              Fechar
+        <DrawerFooter className="flex lg:flex-row flex-col justify-center">
+            <Button className="flex gap-2 justify-center lg:w-80" onClick={() => handleDeletePurchase()}>
+              <CircleAlert />
+              Excluir compra
             </Button>
-          </DrawerClose>
+            <DrawerClose>
+              <Button className="w-full lg:w-80" variant="outline">
+                Fechar
+              </Button>
+            </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

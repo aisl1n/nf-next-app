@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import TableDrawer from "@/components/TableDrawer";
+import { ShoppingCart } from "lucide-react";
 
 type Invoice = {
   _id: string;
@@ -62,9 +63,12 @@ export default function TableResultsPage() {
   };
 
   return (
-    <div className="p-2 max-w-4xl mx-auto">
+    <div className="p-2 mt-8 max-w-4xl mx-auto">
       <div className="shadow-md rounded-md px-2">
-        <h1 className="flex flex-col text-center pb-2 font-black">Minhas compras</h1>
+        <h1 className="flex flex-row justify-center text-center pb-2 font-black text-xl gap-4">
+          <ShoppingCart />
+          Minhas compras
+        </h1>
         <Table>
           <TableHeader>
             <TableRow>

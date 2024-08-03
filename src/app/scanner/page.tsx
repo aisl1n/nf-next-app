@@ -76,20 +76,22 @@ export default function QrReaderPage() {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col justify-center h-[400px] border-2 border-rose-600 rounded-md mt-16 mx-2 p-2">
-          <Scanner
-            constraints={{
-              facingMode: "environment",
-              deviceId: devices[3]?.deviceId,
-              frameRate: { ideal: 30, max: 60 },
-            }}
-            onScan={(result) => {
-              if (result[0]?.rawValue) {
-                handleScan(result[0].rawValue);
-              }
-            }}
-            components={{ tracker: drawFrame }}
-          />
+        <div className="flex justify-center items-center">
+          <div className="flex rounded-md mx-2 p-2 sm:w-[40rem] mt-16 sm:h-[40rem] sm:flex-row">
+            <Scanner
+              constraints={{
+                facingMode: "environment",
+                deviceId: devices[3]?.deviceId,
+                frameRate: { ideal: 30, max: 60 },
+              }}
+              onScan={(result) => {
+                if (result[0]?.rawValue) {
+                  handleScan(result[0].rawValue);
+                }
+              }}
+              components={{ tracker: drawFrame }}
+            />
+          </div>
         </div>
       )}
     </>
