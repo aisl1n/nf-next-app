@@ -12,7 +12,7 @@ export default function HomePage() {
         <Card className="max-w-xs" x-chunk="charts-01-chunk-2">
           <CardHeader>
             <CardTitle>Progress</CardTitle>
-            <CardDescription>You're average more steps a day this year than last year.</CardDescription>
+            <CardDescription>Tentando exemplo de descrição</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
             <div className="grid auto-rows-min gap-2">
