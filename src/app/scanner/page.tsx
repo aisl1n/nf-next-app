@@ -65,14 +65,19 @@ export default function QrReaderPage() {
           <div className="flex flex-col p-4 m-2 rounded-lg text-center bg-emerald-500">
             <h1>Deu bom na leitura dos dados!</h1>
           </div>
-          <TableResults scannedData={scannedData} />
-          <div className="flex flex-row justify-end gap-2 p-4">
-            <Button className="bg-rose-600 font-bold text-inherit hover:bg-rose-800" onClick={() => handleCancel()}>
-              Cancelar
-            </Button>
-            <Button className="bg-emerald-500 font-bold text-inherit hover:bg-emerald-800" onClick={() => handleSave()}>
-              Salvar compra
-            </Button>
+          <div className="pb-20">
+            <TableResults scannedData={scannedData} />
+            <div className="flex flex-row justify-end gap-2 p-4">
+              <Button className="bg-rose-600 font-bold text-inherit hover:bg-rose-800" onClick={() => handleCancel()}>
+                Cancelar
+              </Button>
+              <Button
+                className="bg-emerald-500 font-bold text-inherit hover:bg-emerald-800"
+                onClick={() => handleSave()}
+              >
+                Salvar compra
+              </Button>
+            </div>
           </div>
         </div>
       ) : (
