@@ -20,7 +20,7 @@ type Invoice = {
   market: string;
   date: string;
   products: Array<{
-    _id: string;
+    id: string;
     name: string;
     price: number;
     quantity: number;
@@ -29,7 +29,7 @@ type Invoice = {
 };
 
 interface TableDrawerProps {
-  selectedInvoice: string;
+  selectedInvoice?: Invoice;
 }
 
 export default function TableDrawer({ selectedInvoice }: TableDrawerProps) {
@@ -41,6 +41,7 @@ export default function TableDrawer({ selectedInvoice }: TableDrawerProps) {
       if (!selectedInvoice) return;
       try {
         const response = await axios.get(`https://nf-api-server.vercel.app/purchases/${selectedInvoice}`);
+        console.log(response.data);
         setInvoice(response.data);
       } catch (error) {
         console.error("Erro buscar a compra no drawer", error);
@@ -87,7 +88,7 @@ export default function TableDrawer({ selectedInvoice }: TableDrawerProps) {
             </TableHeader>
             <TableBody>
               {invoice.products.map((product) => (
-                <TableRow key={product._id}>
+                <TableRow key={product.id}>
                   <TableCell className="font-medium">{product.name}</TableCell>
                   <TableCell className="text-start">{product.quantity}</TableCell>
                   <TableCell className="text-right">{product.price}</TableCell>
