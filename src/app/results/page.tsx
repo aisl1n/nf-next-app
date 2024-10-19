@@ -5,7 +5,6 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import TableDrawer from "@/components/TableDrawer";
 import { ShoppingCart } from "lucide-react";
-import { filterByMonth } from "@/lib/utils";
 import { SelectDate } from "@/components/selectDate";
 import dayjs from "dayjs";
 

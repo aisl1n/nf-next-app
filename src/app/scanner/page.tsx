@@ -5,6 +5,9 @@ import { Scanner, useDevices, IDetectedBarcode } from "@yudiel/react-qr-scanner"
 import TableResults from "@/components/TableResults";
 import { Button } from "@/components/ui/button";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
 
 export default function QrReaderPage() {
   const [scannedData, setScannedData] = useState<any>(null);
@@ -26,14 +29,15 @@ export default function QrReaderPage() {
   const handleSave = () => {
     console.log("Salvando compra...");
     const { produtos, valorTotalNumber, nomeLoja, dataCompra } = scannedData;
+    const dataCompraFormatted = dayjs(dataCompra, "DD/MM/YYYY").format();
     try {
       axios.post("https://nf-api-server.vercel.app/products", produtos).then((response) => {
         axios
           .post("https://nf-api-server.vercel.app/purchases", {
-            nomeLoja,
-            dataCompra,
             produtos: response.data,
             valorTotalNumber,
+            nomeLoja,
+            dataCompra: dataCompraFormatted,
           })
           .then((response) => {
             console.log("Compra salva:", response.data);

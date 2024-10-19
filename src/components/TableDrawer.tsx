@@ -70,6 +70,7 @@ export default function TableDrawer({ selectedInvoice }: TableDrawerProps) {
           <DrawerTitle>Itens comprados</DrawerTitle>
           <DrawerDescription>Listagem de produtos adquiridos</DrawerDescription>
         </DrawerHeader>
+        <h1 className="flex justify-center pt-10 font-bold uppercase">{invoice.market}</h1>
         {loading ? (
           <div className="flex items-center justify-center min-h-full h-20 w-full">
             <div className="flex items-center">
@@ -98,15 +99,15 @@ export default function TableDrawer({ selectedInvoice }: TableDrawerProps) {
           </Table>
         )}
         <DrawerFooter className="flex lg:flex-row flex-col justify-center">
-            <Button className="flex gap-2 justify-center lg:w-80" onClick={() => handleDeletePurchase()}>
-              <CircleAlert />
-              Excluir compra
+          <Button className="flex gap-2 justify-center lg:w-80" onClick={() => handleDeletePurchase()}>
+            <CircleAlert />
+            Excluir compra
+          </Button>
+          <DrawerClose>
+            <Button className="w-full lg:w-80" variant="outline">
+              Fechar
             </Button>
-            <DrawerClose>
-              <Button className="w-full lg:w-80" variant="outline">
-                Fechar
-              </Button>
-            </DrawerClose>
+          </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
